@@ -50,7 +50,7 @@ def mainn_menuu(chatid):
                          ", que quando voltares, estarei a tua espera!\n\nPs: Se quiseres uma piada seca, "
                          "escreve 'Piada Seca'\n\n***Warning:*** Eu dependo de que os sites das transportadoras estejam"
                          " funcionais. Por isso se algo não ter, desculpa. Algum problema, "
-                         "contacta-me para gonga1999@outlook.pt", reply_markup=markup, parse_mode='Markdown')
+                         "contacta-me para YOUR EMAIL HERE", reply_markup=markup, parse_mode='Markdown')
 
 
 
