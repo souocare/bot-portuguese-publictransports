@@ -8,7 +8,7 @@ import urllib.request, json
 import pandas as pd
 from fake_useragent import UserAgent
 
-bot = telepot.Bot(token='892727974:AAGJsrqOIt8yqME27WS6R8Np1QOyHzC05fk')
+bot = telepot.Bot(token='ACCESS_TOKEN_HERE')
 
 def get_option_station(query):
     markup_lines = telepot.namedtuple.ReplyKeyboardMarkup(
