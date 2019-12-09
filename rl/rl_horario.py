@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def get_information_json():
     data = {
         "Horário Escolar": {
