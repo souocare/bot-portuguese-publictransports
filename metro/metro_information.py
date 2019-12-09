@@ -83,13 +83,12 @@ def last_trains_timetable(estacao):
 
     resposta_tempo = ''
 
-    for item in response_json("/tempoEspera/Estacao/{}".format(estacao))["resposta"]:
+        for item in response_json("/tempoEspera/Estacao/{}".format(estacao))["resposta"]:
         resposta_tempo = resposta_tempo + "Os próximos comboios com destino final ***{d_final}*** são: \n" \
-               "***Tempo de Chegada 1:*** {tp1} minutos\n***Tempo de Chegada 2:*** {tp2} minutos\n" \
-               "***Tempo de Chegada 3:*** {tp3} minutos\n\n".format(d_final=last_stations[int(item['destino'])],
-                                                          tp1=str(datetime.timedelta(seconds=int(item['tempoChegada1']))),
-                                                          tp2=str(datetime.timedelta(seconds=int(item['tempoChegada2']))),
-                                                          tp3=str(datetime.timedelta(seconds=int(item['tempoChegada3']))))
+                                          "***Tempo de Chegada 1:*** {tp1} minutos\n***Tempo de Chegada 2:*** {tp2} minutos\n" \
+                                          "\n".format(d_final=last_stations[int(item['destino'])],
+                                                      tp1=str(datetime.timedelta(seconds=int(item['tempoChegada1']))),
+                                                      tp2=str(datetime.timedelta(seconds=int(item['tempoChegada2']))))
     return resposta_tempo
 
 
