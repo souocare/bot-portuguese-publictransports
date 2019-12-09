@@ -22,7 +22,7 @@ What I also recommend is to create an executable file.
 
 # Plans for the future
 * Add more public tranports:
-  * Rodoviária de Lisboa;
+  * Rodoviária de Lisboa (all lines);
   * Comboios de Portugal;
   * Carris;
   * Fertagus;
