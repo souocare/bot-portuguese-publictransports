@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v.1.1.1
+* Instead of showing the next three trains (on the Metro de Lisboa), it will only show the next two. This is because there were too much information there, and I wanted to reduce the size of the text
+
 ## v1.1
 * Added information about the next Rodoviária de Lisboa bus
   * Note: only containts the buses "Diretas do Infantado"
