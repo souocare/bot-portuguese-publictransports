@@ -4,7 +4,7 @@ As of right now, it only has information from the "Metro de Lisboa" and "TTSL" (
 
 Below, you have an example of how the Bot works:
 
-![Alt Text](https://media.giphy.com/media/d6KO3xTY9Tzq2WOdsl/giphy.gif)
+![Alt Text](https://media.giphy.com/media/YnGoodK3UjaUXNKqyv/giphy.gif)
 
 # Why was this project created?
 Because I wanted an app, or a bot that I could get all the information in just one place. As I don't have the knowledge right now to build an app, and a Bot was easier at first, I built a bot for Telegram, to use every day.
