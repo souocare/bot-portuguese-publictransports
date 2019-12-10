@@ -4,11 +4,14 @@ import telepot, requests, time, pandas as pd
 import telepot.namedtuple
 from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+import traceback
+import datetime
 #functions from files
 from metro.menu_metro import metro_option
 from metro.menu_metro import get_info_line, get_last_trains, metro_estadolinha, metro_tempocomboio
 from ttsl.ttsl import get_option_station, send_ttsl_info
-import traceback
+from rl.rl import send_rl_info, rl_partidas_options
+from rl.rl_horario import get_information_json
 
 
 #https://telepot.readthedocs.io/en/latest/
@@ -63,7 +66,10 @@ if __name__ == '__main__':
         if len(response) == 0:
             pass
         else:
-            print(response)
+            print("Chat ID: " + str(response[0]['message']["chat"]["id"]) +
+                  "\nNome: " + str(response[0]['message']["chat"]["first_name"]) + " " + response[0]['message']["chat"]["last_name"] +
+                  "\nMensagem: " + str(response[0]['message']['text']) +
+                  "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
 
             try:
                 if response[0]['message']['text'] == '/start' \
