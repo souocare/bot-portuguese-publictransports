@@ -60,7 +60,7 @@ def metro_tempocomboio(query):
                   ["Olivais", "Oriente", "Parque", "Picoas"],
                   ["Pontinha", "Praça de Espanha", "Quinta das Conchas", "Rato"],
                   ["São Sebastião", "Santa Apolónia", "Senhor Roubado", "Telheiras"],
-                  ["Terreiro do Paço"], ["Voltar para Metro", "Voltar para Menu Principal"]])
+                  ["Terreiro do Paço"], ["Voltar para o Metro", "Voltar para o Menu Principal"]])
 
     bot.sendMessage(chat_id=query[0]['message']['from']['id'],
                     text='Qual a estação que quer ver os próximos comboios?\n\n ***Selecione a estação que '
@@ -71,7 +71,7 @@ def metro_tempocomboio(query):
 def metro_estadolinha(query):
     markup_lines = telepot.namedtuple.ReplyKeyboardMarkup(
         keyboard=[['Linha Azul', "Linha Amarela"], ["Linha Verde", "Linha Vermelha"],
-                  ["Todas"], ["Voltar para o Metro", "Voltar para Menu Principal"]])
+                  ["Todas"], ["Voltar para o Metro", "Voltar para o Menu Principal"]])
 
     bot.sendMessage(query[0]['message']['chat']['id'], 'Escolha abaixo a linha que quer ver se está disponivel.',
                     reply_markup=markup_lines)
