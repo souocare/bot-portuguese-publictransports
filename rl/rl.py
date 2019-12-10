@@ -139,9 +139,22 @@ def get_bus(data_from_telegram, partida, horarios):
                                                      minutos=str(int(dados[tipo_horario][partida][dia_semana][
                                                                          str(format(int(hora) + 1, "02"))][0][0])))
                             except (KeyError, IndexError):
-                                prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro,
-                                                                                        dia_semana, autocarros,
-                                                                                        dados, tipo_horario, partida)
+                                if int(data_hora.weekday()) in [4, 5, 6]:
+                                    prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro,
+                                                                                            dia_semana, autocarros,
+                                                                                            dados, tipo_horario,
+                                                                                            partida)
+                                else:
+                                    keys_horario = list(dados[tipo_horario][partida][dia_semana])
+                                    prox_autocarro = prox_autocarro + \
+                                                     "O próximo autocarro é o ***{bus}*** \nParte às ***{horas}:{minutos}***".format(
+                                                         bus=autocarros[
+                                                             dados[tipo_horario][partida][dia_semana][keys_horario[0]][
+                                                                 0][1]],
+                                                         horas=keys_horario[0],
+                                                         minutos=str(format(int(
+                                                             dados[tipo_horario][partida][dia_semana][keys_horario[0]][
+                                                                 0][0]), "02")))
                                 break
 
                 else:
