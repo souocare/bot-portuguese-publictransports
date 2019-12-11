@@ -12,7 +12,7 @@ bot = telepot.Bot(token='ACCESS_TOKEN_HERE')
 
 def get_option_station(query):
     markup_lines = telepot.namedtuple.ReplyKeyboardMarkup(
-        keyboard=[['Barreiro', "Belém", "Cacilhas"], ["Cais do Sodré", "Montijo", "Porto Brandão"],
+        keyboard=[['Barreiro', "Belém", "Cacilhas"], ["Cais do Sodre", "Montijo", "Porto Brandão"],
                   ["Seixal", "Terreiro do Paco", "Trafaria"], ["Voltar para o Menu Principal"]])
 
     bot.sendMessage(query[0]['message']['chat']['id'], 'Escolha a estação que quer ver a informação.',
