@@ -145,7 +145,7 @@ def get_bus(data_from_telegram, partida, horarios):
                                 else:
                                     keys_horario = list(dados[tipo_horario][partida][dia_semana])
                                     prox_autocarro = prox_autocarro + \
-                                                     "O próximo autocarro é o ***{bus}*** \nParte às ***{horas}:{minutos}***".format(
+                                                     "O próximo autocarro é o ***{bus}*** \nParte amanhã às ***{horas}:{minutos}***".format(
                                                          bus=autocarros[
                                                              dados[tipo_horario][partida][dia_semana][keys_horario[0]][
                                                                  0][1]],
