@@ -73,10 +73,14 @@ if __name__ == '__main__':
                       "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
 
             except KeyError:
-                print("Chat ID: " + str(response[0]['message']["chat"]["id"]) +
-                      "\nNome: " + str(response[0]['message']["chat"]["first_name"]) +
-                      "\nMensagem: " + str(response[0]['message']['text']) +
-                      "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
+                try:
+                    print("Chat ID: " + str(response[0]['message']["chat"]["id"]) +
+                          "\nNome: " + str(response[0]['message']["chat"]["first_name"]) +
+                          "\nMensagem: " + str(response[0]['message']['text']) +
+                          "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
+
+                except KeyError:
+                    pass
 
             try:
                 if response[0]['message']['text'] == '/start' \
