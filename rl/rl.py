@@ -132,12 +132,10 @@ def get_bus(data_from_telegram, partida, horarios):
                                 # if len(dados[tipo_horario][partida][dia_semana][str(int(hora)+1)]) != 0:
                                 prox_autocarro = prox_autocarro + \
                                                  "O próximo autocarro é o ***{bus}***\nParte às ***{horas}:{minutos}***".format(
-                                                     bus=autocarros[
-                                                         dados[tipo_horario][partida][dia_semana][
-                                                             str(int(hora) + 1)][0][1]],
+                                                     bus=autocarros[dados[tipo_horario][partida][dia_semana][str(int(hora) + 1)][0][1]],
                                                      horas=str(format(int(hora) + 1, "02")),
-                                                     minutos=str(int(dados[tipo_horario][partida][dia_semana][
-                                                                         str(format(int(hora) + 1, "02"))][0][0])))
+                                                     minutos=str(format(int(dados[tipo_horario][partida][dia_semana][str(format(int(hora) + 1, "02"))][0][0]), "02")))
+                                
                             except (KeyError, IndexError):
                                 if int(data_hora.weekday()) in [4, 5, 6]:
                                     prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro,
