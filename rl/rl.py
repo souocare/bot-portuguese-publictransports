@@ -12,6 +12,16 @@ from fake_useragent import UserAgent
 import os
 
 
+def get_information_json():
+    file = requests.get(
+      url="https://raw.githubusercontent.com/souocare/bot-portuguese-publictransports/master/rl/horarios_RL_diretos_infantado.json",
+      headers={"Accept": "application/json; charset=utf-8"})
+
+    file.encoding = "ISO 3166-2"
+
+    return file.json()
+
+
 def get_typeschedule(json, datateste):
     typeschedules = ["Horário Escolar", "Horário Não Escolar", "Horário de Verão"]
 
