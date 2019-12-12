@@ -1,6 +1,6 @@
 # CHANGELOG
 
-# v.1.1.2
+## v.1.1.2
 * Instead of using an API with brazilian portuguese jokes, I created a file with portuguese from portugal jokes
 
 ## v.1.1.1
