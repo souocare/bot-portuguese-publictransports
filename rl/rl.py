@@ -193,15 +193,40 @@ def get_bus(data_from_telegram, partida, horarios):
                         break
 
     if len(prox_autocarro) == 0:
-        prox_autocarro = prox_autocarro + \
-                         "Está um autocarro a partir ***agora mesmo*** às ***{horas_now}:{minutos_now}***\n\n" \
-                         "Informação para o próximo autocarro às " \
-                         "***{horas_next}:{minutos_next}***".format(horas_now=str(data_hora.hour),
-                                                                    minutos_now=str(
-                                                                        format(int(data_hora.minute), "02")),
-                                                                    horas_next=str(data_hora.hour),
-                                                                    minutos_next=str(
-                                                                        format(int(data_hora.minute) + 1, "02")))
+        if int(data_hora.hour) in [0, 1, 2, 3, 4, 5, 6]:
+            lista_horas = list(dados[tipo_horario][partida][dia_semana].keys())
+            prox_autocarro = prox_autocarro + \
+                             "O próximo autocarro é o ***{bus}***\nPassa às ***{horas}:{minutos}***".format(
+                                 bus=autocarros[
+                                     dados[tipo_horario][partida][dia_semana][
+                                         lista_horas[0]][0][1]],
+                                 horas=lista_horas[0],
+                                 minutos=str(format(int(dados[tipo_horario][partida][dia_semana][
+                                                            lista_horas[0]][0][
+                                                            0]), "02")))
+
+        elif int(data_hora.hour) == 23:
+            lista_horas = list(dados[tipo_horario][partida][dia_semana].keys())
+            prox_autocarro = prox_autocarro + \
+                             "O próximo autocarro é o ***{bus}***\nPassa amanhã às ***{horas}:{minutos}***".format(
+                                 bus=autocarros[
+                                     dados[tipo_horario][partida][dia_semana][
+                                         lista_horas[0]][0][1]],
+                                 horas=lista_horas[0],
+                                 minutos=str(format(int(dados[tipo_horario][partida][dia_semana][
+                                                            lista_horas[0]][0][
+                                                            0]), "02")))
+
+        else:
+            prox_autocarro = prox_autocarro + \
+                             "Está um autocarro a partir ***agora mesmo*** às ***{horas_now}:{minutos_now}***\n\n" \
+                             "Informação para o próximo autocarro às " \
+                             "***{horas_next}:{minutos_next}***".format(horas_now=str(data_hora.hour),
+                                                                        minutos_now=str(
+                                                                            format(int(data_hora.minute), "02")),
+                                                                        horas_next=str(data_hora.hour),
+                                                                        minutos_next=str(
+                                                                            format(int(data_hora.minute) + 1, "02")))
     else:
         pass
 
