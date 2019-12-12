@@ -12,6 +12,7 @@ from metro.menu_metro import get_info_line, get_last_trains, metro_estadolinha, 
 from ttsl.ttsl import get_option_station, send_ttsl_info
 from rl.rl import send_rl_info, rl_partidas_options
 from rl.rl_horario import get_information_json
+from others.piadas_secas import get_piada_seca
 
 
 #https://telepot.readthedocs.io/en/latest/
@@ -126,13 +127,12 @@ if __name__ == '__main__':
 
                 elif response[0]['message']['text'] == 'Nem por isso' or response[0]['message']['text'] == 'Sim, mais uma!' \
                         or response[0]['message']['text'].lower() == 'piada seca':
-                    joke = requests.get(url="https://us-central1-kivson.cloudfunctions.net/charada-aleatoria",
-                                        headers={"Accept": "application/json"}).json()
+                    joke = get_piada_seca()
 
                     bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
                                     text="Diverte-te com esta piada seca: \n\n{pergunta} \n{resposta}"
-                                    .format(pergunta=joke['pergunta'], resposta=joke['resposta']),
-                                    reply_markup=telepot.namedtuple.ReplyKeyboardRemove())
+                                    .format(pergunta=joke[0], resposta=joke[1]),
+                                    reply_markup=telepot.namedtuple.ReplyKeyboardRemove(), parse_mode='markdown')
 
                     time.sleep(5)
 
