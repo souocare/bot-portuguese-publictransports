@@ -1,5 +1,8 @@
 # CHANGELOG
 
+# v.1.1.2
+* Instead of using an API with brazilian portuguese jokes, I created a file with portuguese from portugal jokes
+
 ## v.1.1.1
 * Instead of showing the next three trains (on the Metro de Lisboa), it will only show the next two. This is because there were too much information there, and I wanted to reduce the size of the text
 
