@@ -10,8 +10,7 @@ import datetime
 from metro.menu_metro import metro_option
 from metro.menu_metro import get_info_line, get_last_trains, metro_estadolinha, metro_tempocomboio
 from ttsl.ttsl import get_option_station, send_ttsl_info
-from rl.rl import send_rl_info, rl_partidas_options
-from rl.rl_horario import get_information_json
+from rl.rl import send_rl_info, rl_partidas_options, get_information_json
 from others.piadas_secas import get_piada_seca
 
 
