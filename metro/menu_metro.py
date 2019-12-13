@@ -35,9 +35,9 @@ def get_last_trains(estacao, chat_id, query):
         while (len(text_last_trains)) == 0:
             text_last_trains = last_trains_timetable(dictionary_metro[estacao])
         #print(text_last_trains)
-        bot.sendMessage(chat_id=chat_id, text='{}\nCaso não queira mais, selecione a opção para sair, ou então outro '
-                                              'transporte para obter a informação do '
-                                              'mesmo.'.format(text_last_trains), parse_mode='Markdown')
+        bot.sendMessage(chat_id=chat_id, text='{}\nCaso não queira mais, selecione a opção ***Voltar para o Menu Principal*** para voltar ao '
+                                              'menu principal, ou ***Voltar para o Metro*** para continuar com informações '
+                                              'metro.'.format(text_last_trains), parse_mode='Markdown')
     except:
         bot.sendMessage(chat_id=chat_id,
                         text='De momento, não é possivel obter a informação desejada. '
@@ -64,7 +64,8 @@ def metro_tempocomboio(query):
 
     bot.sendMessage(chat_id=query[0]['message']['from']['id'],
                     text='Qual a estação que quer ver os próximos comboios?\n\n ***Selecione a estação que '
-                         'pretende nas linhas abaixo apresentadas.*** \n\n Se quiser sair, clique na opção "Sair".',
+                         'pretende nas linhas abaixo apresentadas.*** \n\n '
+                         'Se quiser sair, clique em ***Voltar para o Menu Principal***.',
                     parse_mode='Markdown', reply_markup=markup_stations)
 
 
