@@ -14,8 +14,10 @@ from rl.rl import send_rl_info, rl_partidas_options, get_information_json
 from others.piadas_secas import get_piada_seca
 
 
+
 #https://telepot.readthedocs.io/en/latest/
-bot = telepot.Bot(token='PRIVATE TELEGRAM TOKEN HERE')
+bot = telepot.Bot(token='Telegram_Token') #normal
+
 
 
 metro_lines = ['Linha Azul', "Linha Amarela", "Linha Verde", "Linha Vermelha",
@@ -24,7 +26,7 @@ metro_lines = ['Linha Azul', "Linha Amarela", "Linha Verde", "Linha Vermelha",
 boats_lines = ["Barreiro", "Belém", "Cacilhas", "Cais do Sodre", "Montijo",
                "Porto Brandão", "Seixal", "Terreiro do Paco", "Trafaria"]
 
-sub_options = ["Estado da Linha", "Tempo do próximo comboio", "Sair"]
+sub_options = ["Estado da Linha", "Tempo do próximo comboio"]
 
 lines_metro = ["Aeroporto", "Alameda", "Alfornelos", "Alvalade","Alto Moinhos",
                         "Amadora Este", "Ameixoeira", "Anjos", "Areeiro", "Arroios",
@@ -37,8 +39,11 @@ lines_metro = ["Aeroporto", "Alameda", "Alfornelos", "Alvalade","Alto Moinhos",
                         "Pontinha", "Praça de Espanha", "Quinta das Conchas", "Rato",
                         "Reboleira", "Restauradores", "Roma", "Rossio", "São Sebastião",
                         "Saldanha", "Santa Apolónia", "Senhor Roubado", "Telheiras",
-                        "Terreiro do Paço", "Voltar para Metro",
-                        "Voltar para Menu Principal"]
+                        "Terreiro do Paço"]
+
+rl_options = ["Partidas do Infantado", "Partidas do Campo Grande"]
+
+back_options = ["Sair", "Voltar para o Metro", "Voltar para o Menu Principal"]
 
 
 def mainn_menuu(chatid):
@@ -53,7 +58,7 @@ def mainn_menuu(chatid):
                          ", que quando voltares, estarei a tua espera!\n\nPs: Se quiseres uma piada seca, "
                          "escreve 'Piada Seca'\n\n***Warning:*** Eu dependo de que os sites das transportadoras estejam"
                          " funcionais. Por isso se algo não ter, desculpa. Algum problema, "
-                         "contacta-me para YOUR EMAIL HERE", reply_markup=markup, parse_mode='Markdown')
+                         "contacta-me para gonga1999@outlook.pt", reply_markup=markup, parse_mode='Markdown')
 
 
 
@@ -68,9 +73,9 @@ if __name__ == '__main__':
         else:
             try:
                 print("Chat ID: " + str(response[0]['message']["chat"]["id"]) +
-                      "\nNome: " + str(response[0]['message']["chat"]["first_name"]) + " " + response[0]['message']["chat"]["last_name"] +
-                      "\nMensagem: " + str(response[0]['message']['text']) +
-                      "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
+                  "\nNome: " + str(response[0]['message']["chat"]["first_name"]) + " " + response[0]['message']["chat"]["last_name"] +
+                  "\nMensagem: " + str(response[0]['message']['text']) +
+                  "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
 
             except KeyError:
                 try:
@@ -110,7 +115,7 @@ if __name__ == '__main__':
 
 
                 elif response[0]['message']['text'] == 'RL':
-                    bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
+                    rl_partidas_options(response[0]['message']['from']['id'])
 
                 elif response[0]['message']['text'] == 'CP':
                     bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
@@ -182,14 +187,19 @@ if __name__ == '__main__':
 
                     offset = offset_ttsl + 1
 
+                elif response[0]['message']['text'] in rl_options:
+                    offset_rl = send_rl_info(query=response,
+                                             partida=response[0]['message']['text'],
+                                             horarios=get_information_json())
 
-                elif response[0]['message']['text'] == "Voltar para o Metro":
-                    pass
-                    offset = offset + 1
+                    offset = offset_rl + 1
 
-                elif response[0]['message']['text'] == "Voltar para Menu Principal":
-                    mainn_menuu(chatid=response[0]['chat']['id'])
-                    offset = offset + 1
+
+                elif response[0]['message']['text'] in back_options:
+                    if response[0]['message']['text'] == "Sair" or response[0]['message']['text'] == "Voltar para o Menu Principal":
+                        mainn_menuu(response[0]['message']["chat"]["id"])
+                    elif response[0]['message']['text'] == "Voltar para o Metro":
+                        metro_option(response, response[0]['message']['from']['id'])
 
 
                 else:
@@ -202,36 +212,10 @@ if __name__ == '__main__':
                                     .format(msg=response[0]['message']['text']), reply_markup=markup_altern)
 
             except Exception:
-                traceback.print_exc()
+                file = open("log_file.txt", "w")
+                file.write(traceback.format_exc())
+                file.close()
                 pass
-            '''
-            except KeyError:
-                if response[0]['callback_query']['data'] in callback.keys():
-                    value = response[0]['callback_query']['data']
-
-                    if response[0]['callback_query']['data'] == 'menu_principal' or response[0]['callback_query']['data'] == 'metro':
-                        callback[response[0]['callback_query']['data']](response, response[0]['callback_query']["message"]['chat']['id'])
-
-
-                    elif "ttsl" in response[0]['callback_query']['data']:
-                        offset_ttsl = callback[value][0](response, callback[value][1])
-                        offset = offset_ttsl + 1
-
-                    else:
-                        linha = response[0]['callback_query']['data']
-                        if linha == "menu principal":
-                            pass
-                        else:
-                            offset_estadometro = callback[response[0]['callback_query']['data']](linha.split(' ')[2],
-                                                                                                 response[0][
-                                                                                                     'callback_query'][
-                                                                                                     "message"]['chat'][
-                                                                                                     'id'],
-                                                                                                 response)
-                        offset = offset_estadometro + 1
-                    #offset = response[-1]["update_id"] + 1
-                    
-            '''
 
 
 
@@ -240,4 +224,3 @@ if __name__ == '__main__':
                 offset = response[-1]["update_id"] + 1  # penso que isto é para não receber as mensagens antigas
             except IndexError:
                 pass
-
