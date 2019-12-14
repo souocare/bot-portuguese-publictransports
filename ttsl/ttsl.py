@@ -8,7 +8,7 @@ import urllib.request, json
 import pandas as pd
 from fake_useragent import UserAgent
 
-bot = telepot.Bot(token='ACCESS_TOKEN_HERE')
+bot = telepot.Bot(token='Telegram_Token') #normal
 
 def get_option_station(query):
     markup_lines = telepot.namedtuple.ReplyKeyboardMarkup(
@@ -99,5 +99,3 @@ def get_info_ttsl(station):
 
     except:
         return "De momento, não é possivel obter a informação desejada. Tente mais tarde.\nPedimos desculpa."
-
-
