@@ -2,6 +2,7 @@
 
 import requests, re, datetime
 
+
 dictionary_metro = {"Aeroporto":"AP", "Alameda":"AM", "Alfornelos":"AF", "Alvalade":"AL","Alto Moinhos": "AH",
                         "Amadora Este":"AS", "Ameixoeira":"AX", "Anjos":"AN", "Areeiro":"AE", "Arroios":"AR",
                         "Avenida":"AV", "Baixa Chiado":"BC", "Bela Vista":"BV", "Cabo Ruivo":"CR", "Cais Sodré":"CS",
@@ -20,13 +21,13 @@ dictionary_metro = {"Aeroporto":"AP", "Alameda":"AM", "Alfornelos":"AF", "Alvala
 ## Important Functions for requests of Metro API
 def get_access_token():
     headers_get_token= {
-        'Authorization': 'PRIVATE Metro API TOKEN HERE',
+        'Authorization': 'Basic MlZib09JMzd3TXBSdnA2YTlTZlliUDNfSFBzYTpNR0E0YzB2NVpRUTlxTFNGNFFacmRXQ0R6R3dh',
     }
 
     data_get_token = {
       'grant_type': 'password',
-      'username': 'INSER_USERNAME_HERE',
-      'password': 'INSER_PASSWORD_HERE'
+      'username': 'souocare',
+      'password': 'Bolaxinha99'
     }
 
     response_get_token = requests.post('https://api.metrolisboa.pt:8243/token',
