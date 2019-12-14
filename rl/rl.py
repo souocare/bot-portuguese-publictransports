@@ -25,6 +25,7 @@ def get_information_json():
 def get_typeschedule(json, datateste):
     typeschedules = ["Horário Escolar", "Horário Não Escolar", "Horário de Verão"]
 
+    # print(datateste)
     type_final = ""
 
     for type in typeschedules:
@@ -39,7 +40,7 @@ def get_typeschedule(json, datateste):
 
 
 def rl_partidas_options(chat_id):
-    bot = telepot.Bot(token='BOT TOKEN')
+    bot = telepot.Bot(token='892727974:AAGJsrqOIt8yqME27WS6R8Np1QOyHzC05fk')
 
     markup_anotherjoke = telepot.namedtuple.ReplyKeyboardMarkup(
         keyboard=[["Partidas do Infantado", "Partidas do Campo Grande"], ["Voltar para o Menu Principal"]])
@@ -48,7 +49,7 @@ def rl_partidas_options(chat_id):
 
 
 def send_rl_info(query, partida, horarios):
-    bot = telepot.Bot(token='BOT TOKEN')
+    bot = telepot.Bot(token='892727974:AAGJsrqOIt8yqME27WS6R8Np1QOyHzC05fk')
 
     bot.sendMessage(query[0]['message']['chat']['id'], text=get_bus(data_from_telegram=query[0]['message']['date'],
                                                                     partida=partida,
@@ -88,15 +89,20 @@ def get_bus(data_from_telegram, partida, horarios):
 
     data_hora = datetime.datetime.fromtimestamp(data_from_telegram)
 
+    hora = data_hora.hour
+    minuto = data_hora.minute
+
     dados = horarios
 
     tipo_horario = get_typeschedule(dados,
                                     datetime.datetime.strptime(str(data_hora.day) + "/" + str(data_hora.month),
                                                                "%d/%m"))
 
+    # print(tipo_horario)
 
     prox_autocarro = ""
 
+    # https://feriados.com.pt/feriados/portugal/
 
     dia_semana = ""
     if int(data_hora.weekday()) in [0, 1, 2, 3, 4]:
@@ -106,6 +112,7 @@ def get_bus(data_from_telegram, partida, horarios):
     else:
         dia_semana = dia_semana + "Domingo ou Feriado"
 
+    # print(dia_semana)
     if dia_semana == "Domingo ou Feriado":
         prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro, dia_semana, autocarros, dados,
                                                                 tipo_horario, partida)
@@ -142,10 +149,14 @@ def get_bus(data_from_telegram, partida, horarios):
                                 # if len(dados[tipo_horario][partida][dia_semana][str(int(hora)+1)]) != 0:
                                 prox_autocarro = prox_autocarro + \
                                                  "O próximo autocarro é o ***{bus}***\nParte às ***{horas}:{minutos}***".format(
-                                                     bus=autocarros[dados[tipo_horario][partida][dia_semana][str(int(hora) + 1)][0][1]],
+                                                     bus=autocarros[
+                                                         dados[tipo_horario][partida][dia_semana][
+                                                             str(int(hora) + 1)][0][1]],
                                                      horas=str(format(int(hora) + 1, "02")),
-                                                     minutos=str(format(int(dados[tipo_horario][partida][dia_semana][str(format(int(hora) + 1, "02"))][0][0]), "02")))
-                                
+                                                     minutos=str(format(int(dados[tipo_horario][partida][dia_semana][
+                                                                                str(format(int(hora) + 1, "02"))][0][
+                                                                                0]), "02")))
+
                             except (KeyError, IndexError):
                                 if int(data_hora.weekday()) in [4, 5, 6]:
                                     prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro,
@@ -201,6 +212,23 @@ def get_bus(data_from_telegram, partida, horarios):
                         prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro, dia_semana, autocarros,
                                                                                 dados, tipo_horario, partida)
                         break
+            '''
+            else:
+                if len(dados[tipo_horario][partida][dia_semana][hora]) != 0:
+                    print(dia_semana)
+                    print(hora)
+
+                    print(dados[tipo_horario][partida][dia_semana][hora][0][1])
+                    prox_autocarro = prox_autocarro + \
+                                     "O próximo autocarro é o ***{bus}***\nPassa às ***{horas}:{minutos}***".format(
+                                         bus=autocarros[
+                                             dados[tipo_horario][partida][dia_semana][hora][0][1]],
+                                         horas=hora,
+                                         minutos=dados[tipo_horario][partida][dia_semana][hora][0][0])
+                else:
+                    prox_autocarro = prox_autocarro + get_info_otherweekday(prox_autocarro, dia_semana, autocarros,
+                                                                            dados, tipo_horario, partida)
+                break'''
 
     if len(prox_autocarro) == 0:
         if int(data_hora.hour) in [0, 1, 2, 3, 4, 5, 6]:
