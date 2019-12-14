@@ -21,13 +21,13 @@ dictionary_metro = {"Aeroporto":"AP", "Alameda":"AM", "Alfornelos":"AF", "Alvala
 ## Important Functions for requests of Metro API
 def get_access_token():
     headers_get_token= {
-        'Authorization': 'Basic MlZib09JMzd3TXBSdnA2YTlTZlliUDNfSFBzYTpNR0E0YzB2NVpRUTlxTFNGNFFacmRXQ0R6R3dh',
+        'Authorization': 'Metro_Token',
     }
 
     data_get_token = {
       'grant_type': 'password',
-      'username': 'souocare',
-      'password': 'Bolaxinha99'
+      'username': 'Metro_username',
+      'password': 'Metro_password'
     }
 
     response_get_token = requests.post('https://api.metrolisboa.pt:8243/token',
