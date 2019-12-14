@@ -7,7 +7,7 @@ from .metro_information import dictionary_metro, last_trains_timetable
 from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 
-bot = telepot.Bot(token='PRIVATE TELEGRAM TOKEN HERE')
+bot = telepot.Bot(token='Telegram_Token') #normal
 
 
 def metro_option(response, chatid):
