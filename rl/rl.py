@@ -39,7 +39,7 @@ def get_typeschedule(json, datateste):
 
 
 def rl_partidas_options(chat_id):
-    bot = telepot.Bot(token='892727974:AAGJsrqOIt8yqME27WS6R8Np1QOyHzC05fk')
+    bot = telepot.Bot(token='BOT TOKEN')
 
     markup_anotherjoke = telepot.namedtuple.ReplyKeyboardMarkup(
         keyboard=[["Partidas do Infantado", "Partidas do Campo Grande"], ["Voltar para o Menu Principal"]])
@@ -48,7 +48,7 @@ def rl_partidas_options(chat_id):
 
 
 def send_rl_info(query, partida, horarios):
-    bot = telepot.Bot(token='892727974:AAGJsrqOIt8yqME27WS6R8Np1QOyHzC05fk')
+    bot = telepot.Bot(token='BOT TOKEN')
 
     bot.sendMessage(query[0]['message']['chat']['id'], text=get_bus(data_from_telegram=query[0]['message']['date'],
                                                                     partida=partida,
