@@ -12,6 +12,6 @@ def get_piada_seca():
     org_file.encoding = "ISO 3166-2"
     file = org_file.json()
 
-    piada = file[str(randrange(len(file)))]
+    piada = file[str(randrange(len(file)-1))]
 
     return piada
