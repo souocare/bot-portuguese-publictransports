@@ -48,7 +48,7 @@ back_options = ["Sair", "Voltar para o Metro", "Voltar para o Menu Principal"]
 
 def mainn_menuu(chatid):
     markup = telepot.namedtuple.ReplyKeyboardMarkup(
-        keyboard=[['Metro', "RL"], ["CP", "Carris"], ["Barcos", "TST"]])
+        keyboard=[['Metro', "RL"], ["CP", "Carris"], ["Barcos", "Mafrense"], ["Metereologia"]])
 
     bot.sendMessage(chat_id=chatid,
                     text="Bem-vindo ao teu bot pessoal dos transportes. Escolhe, das opções abaixo,"
@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
                 elif response[0]['message']['text'] == '/help_commands':
                     all_comands_oldlist = ["Metro", "RL", "CP",
-                                           "Carris", "Barcos", "TST"] + metro_lines + sub_options + boats_lines
+                                           "Carris", "Barcos", "Mafrense", "Metereologia"] + metro_lines + sub_options + boats_lines
                     all_comands_newlist = []
                     for element in all_comands_oldlist:
                         all_comands_newlist.append("-> " + element + "\n")
@@ -126,7 +126,10 @@ if __name__ == '__main__':
                 elif response[0]['message']['text'] == 'Barcos':
                     get_option_station(response)
 
-                elif response[0]['message']['text'] == 'TST':
+                elif response[0]['message']['text'] == 'Mafrense':
+                    bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
+                    
+                elif response[0]['message']['text'] == 'Metereologia':
                     bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
 
                 elif response[0]['message']['text'] == 'Nem por isso' or response[0]['message']['text'] == 'Sim, mais uma!' \
