@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+v#!/usr/bin/env python3
 
 import telepot, requests, time
 import telepot.namedtuple
@@ -59,6 +59,7 @@ def metro_tempocomboio(query):
                   ["Martim Moniz", "Moscavide", "Odivelas", "Olaias"],
                   ["Olivais", "Oriente", "Parque", "Picoas"],
                   ["Pontinha", "Praça de Espanha", "Quinta das Conchas", "Rato"],
+                  ["Reboleira", "Restauradores", "Roma", "Rossio"],
                   ["São Sebastião", "Santa Apolónia", "Senhor Roubado", "Telheiras"],
                   ["Terreiro do Paço"], ["Voltar para o Metro", "Voltar para o Menu Principal"]])
 
