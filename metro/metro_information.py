@@ -58,9 +58,8 @@ def estado_linha(linha):
             if resposta_todos["resposta"][linha.lower()] == " Ok":
                 text_estado_todas_linhas = text_estado_todas_linhas + "A linha {} está a funcionar corretamente.\n".format(linha)
             else:
-                text_estado_todas_linhas = text_estado_todas_linhas + "A linha {} está com problemas. O problema é: {}\n".format(linha,
-                                                                                         get_line_problem("linha " + linha,
-                                                                                                          resposta_todos["resposta"]))
+                text_estado_todas_linhas = text_estado_todas_linhas + "A linha {} está com problemas. O problema é: {}\n".format(linha, resposta_todos["resposta"][linha.lower()])
+                
         return text_estado_todas_linhas
 
     else:
