@@ -70,7 +70,7 @@ def estado_linha(linha):
             return "A linha {} está a funcionar sem problemas.".format(linha)
         else:
             return "A linha está com problemas. O problema é: \n{}".format(
-                                                                        get_line_problem(linha, resposta_linha))
+                                                                        resposta_linha["resposta"][linha.lower()])
 
 
 def last_trains_timetable(estacao):
@@ -93,8 +93,3 @@ def last_trains_timetable(estacao):
     return resposta_tempo
 
 
-
-## Secondary functions to use in the main ones
-def get_line_problem(linha, resposta):
-    abrv = {"amarela":"am", "azul":"az", "verde":"vd", "vermelha":"vm"}
-    return resposta["resposta"]["tipo_msg_" + abrv[linha.split()[1]]]
