@@ -39,3 +39,7 @@ What I also recommend is to create an executable file.
 * Clean the code.
 
 * Figure out where to put the program run 24/7 (but that's for me, but that's the main plan).
+
+# Acknowledgements
+I need to thanks to all people that supported me to this project. They really helped me not giving up, and always make everything better.
+Also, I need to thank to Metro de Lisboa for creating a very easy API to use. And, of course, to the creator of Telepot module. 
