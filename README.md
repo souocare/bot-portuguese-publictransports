@@ -1,6 +1,6 @@
 # bot-portuguese-publictransports
 A telegram bot that gives information about Public Transportation in Portugal, specially in Lisbon. 
-As of right now, it only has information from the "Metro de Lisboa" and "TTSL" (boats). More going to be added. (read "Plans for the future" below).
+As of right now, it only has information from the "Metro de Lisboa", "TTSL" (boats), "Rodoviária de Lisboa" (only the "Diretas do Infantado"). More going to be added. (read "Plans for the future" below).
 
 Below, you have an example of how the Bot works:
 
@@ -26,6 +26,8 @@ What I also recommend is to create an executable file.
   * Comboios de Portugal;
   * Carris;
   * Fertagus;
+  * Mafrense;
+  * Adding the weather
   * Others not planned yet.
 
 * Add a more updated telegram bot module, or make my own.
