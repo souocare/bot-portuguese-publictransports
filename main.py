@@ -12,6 +12,7 @@ from metro.menu_metro import get_info_line, get_last_trains, metro_estadolinha, 
 from ttsl.ttsl import get_option_station, send_ttsl_info
 from rl.rl import send_rl_info, rl_partidas_options, get_information_json
 from others.piadas_secas import get_piada_seca
+from others.weather import get_all_weather_city, get_all_weather_geoloc
 
 
 
@@ -130,7 +131,9 @@ if __name__ == '__main__':
                     bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
                     
                 elif response[0]['message']['text'] == 'Metereologia':
-                    bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
+                    bot.sendMessage(response[0]["message"]['from']['id'],
+                                    text="Para obter a informação de uma cidade, escreva 'Metereologia - NomeCidade.\n"
+                                         "Se preferir, pode simplesmente enviar as suas coordenadas.")
 
                 elif response[0]['message']['text'] == 'Nem por isso' or response[0]['message']['text'] == 'Sim, mais uma!' \
                         or response[0]['message']['text'].lower() == 'piada seca':
@@ -203,6 +206,17 @@ if __name__ == '__main__':
                         mainn_menuu(response[0]['message']["chat"]["id"])
                     elif response[0]['message']['text'] == "Voltar para o Metro":
                         metro_option(response, response[0]['message']['from']['id'])
+                        
+                elif (response[0]['message']['text']).startswith("Met - ") or (response[0]['message']['text']).startswith("met - "):
+                    cidade = response[0]['message']['text'][6:]
+                    try:
+                        bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                        text=get_all_weather_city(cidade),
+                                        parse_mode='markdown')
+                    except:
+                        bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                        text="De momento não é possivel obter a informação. Tente mais tarde",
+                                        parse_mode='markdown')
 
 
                 else:
@@ -215,10 +229,20 @@ if __name__ == '__main__':
                                     .format(msg=response[0]['message']['text']), reply_markup=markup_altern)
 
             except Exception:
-                file = open("log_file.txt", "w")
-                file.write(traceback.format_exc())
-                file.close()
-                pass
+                try:
+                    location = response[0]['message']['location']
+                    bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                    text=get_all_weather_geoloc(location['latitude'], location['longitude']),
+                                    parse_mode='markdown')
+
+                except:
+                    bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                    text="De momento não é possivel obter a informação. Tente mais tarde",
+                                    parse_mode='markdown')
+                    file = open("log_file.txt", "w")
+                    file.write(traceback.format_exc())
+                    file.close()
+                    pass
 
 
 
