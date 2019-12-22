@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2
+* Added weather information, with the condition of the exact time, for the rest of the day, and for the next day. It will also give the temperature (exact, minimum, and maximum), and the percentage of the clouds on the sky
+* Added more jokes
+
 ## v.1.1.2
 * Instead of using an API with brazilian portuguese jokes, I created a file with portuguese from portugal jokes
 
