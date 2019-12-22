@@ -56,7 +56,6 @@ def get_weather_geoloc(lat, lon):
 
     return weather_info
 
-4fa80fb071902376bf70da8092850911
 
 def get_forecast_city(city):
     information = requests.get("http://api.openweathermap.org/data/2.5/forecast?q={city}&"
