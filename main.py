@@ -209,7 +209,7 @@ if __name__ == '__main__':
                         
                 elif (response[0]['message']['text']).lower().startswith("met - ") or \
                         (response[0]['message']['text']).lower().startswith("met-"):
-                    if (response[0]['message']['text']).lower().startswith("Met - "):
+                    if (response[0]['message']['text']).lower().startswith("met - "):
                         cidade = response[0]['message']['text'][6:]
                     if (response[0]['message']['text']).lower().startswith("met-"):
                         cidade = response[0]['message']['text'][4:]
