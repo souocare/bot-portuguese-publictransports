@@ -207,8 +207,12 @@ if __name__ == '__main__':
                     elif response[0]['message']['text'] == "Voltar para o Metro":
                         metro_option(response, response[0]['message']['from']['id'])
                         
-                elif (response[0]['message']['text']).startswith("Met - ") or (response[0]['message']['text']).startswith("met - "):
-                    cidade = response[0]['message']['text'][6:]
+                elif (response[0]['message']['text']).lower().startswith("met - ") or \
+                        (response[0]['message']['text']).lower().startswith("met-"):
+                    if (response[0]['message']['text']).lower().startswith("Met - "):
+                        cidade = response[0]['message']['text'][6:]
+                    if (response[0]['message']['text']).lower().startswith("met-"):
+                        cidade = response[0]['message']['text'][4:]
                     try:
                         bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
                                         text=get_all_weather_city(cidade),
