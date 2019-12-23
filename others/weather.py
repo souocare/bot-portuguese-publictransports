@@ -112,17 +112,23 @@ def get_forecast_city(city):
         else:
             pass
 
-    info_tempo_hoje = "Para o dia de hoje:\n-> Condições metereológicas possiveis: {met}\n" \
-           "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
-           "-> Percentagem minima de nuvens de {nmin}% e máxima de {nmax}%".format(met="{} e {}".format(", ".join(metereologia_hoje[:-1]),  metereologia_hoje[-1]),
-                                                                              tmin=temp_min_hoje, tmax=temp_max_hoje,
-                                                                              nmin=valormin_nuvens_hoje, nmax=valormax_nuvens_hoje)
+    if len(metereologia_hoje) != 0:
+        info_tempo_hoje = "Para o dia de hoje:\n-> Condições metereológicas possiveis: {met}\n" \
+                          "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
+                          "-> Percentagem minima de nuvens de {nmin}% e máxima de {nmax}%".format(
+            met="{} e {}".format(", ".join(metereologia_hoje[:-1]), metereologia_hoje[-1]),
+            tmin=temp_min_hoje, tmax=temp_max_hoje,
+            nmin=valormin_nuvens_hoje, nmax=valormax_nuvens_hoje)
+
+    else:
+        info_tempo_hoje = "O dia está quase no final, por isso só há informações gerais para o dia de amanhã abaixo."
 
     info_tempo_amanha = "Para o dia de amanhã:\n-> Condições metereológicas possiveis: {met}\n" \
-           "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
-           "-> Percentagem minima de nuvens de {nmin}% e máxima de {nmax}%".format(met="{} e {}".format(", ".join(metereologia_amanha[:-1]),  metereologia_amanha[-1]),
-                                                                              tmin=temp_min_amanha, tmax=temp_max_amanha,
-                                                                              nmin=valormin_nuvens_amanha, nmax=valormax_nuvens_amanha)
+                        "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
+                        "-> Percentagem minima de nuvens de {nmin}% e máxima de {nmax}%".format(
+        met="{} e {}".format(", ".join(metereologia_amanha[:-1]), metereologia_amanha[-1]),
+        tmin=temp_min_amanha, tmax=temp_max_amanha,
+        nmin=valormin_nuvens_amanha, nmax=valormax_nuvens_amanha)
 
     return info_tempo_hoje + "\n\n" + info_tempo_amanha
 
@@ -183,12 +189,16 @@ def get_forecast_geoloc(lat, lon):
         else:
             pass
 
-    info_tempo_hoje = "Para o dia de hoje:\n-> Condições metereológicas possiveis: {met}\n" \
-                      "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
-                      "-> Percentagem minima de nuvens de {nmin} e máxima de {nmax}".format(
-        met="{} e {}".format(", ".join(metereologia_hoje[:-1]), metereologia_hoje[-1]),
-        tmin=temp_min_hoje, tmax=temp_max_hoje,
-        nmin=valormin_nuvens_hoje, nmax=valormax_nuvens_hoje)
+    if len(metereologia_hoje) != 0:
+        info_tempo_hoje = "Para o dia de hoje:\n-> Condições metereológicas possiveis: {met}\n" \
+                          "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
+                          "-> Percentagem minima de nuvens de {nmin}% e máxima de {nmax}%".format(
+            met="{} e {}".format(", ".join(metereologia_hoje[:-1]), metereologia_hoje[-1]),
+            tmin=temp_min_hoje, tmax=temp_max_hoje,
+            nmin=valormin_nuvens_hoje, nmax=valormax_nuvens_hoje)
+
+    else:
+        info_tempo_hoje = "O dia está quase no final, por isso só há informações gerais para o dia de amanhã abaixo."
 
     info_tempo_amanha = "Para o dia de amanhã:\n-> Condições metereológicas possiveis: {met}\n" \
                         "-> Temperatura minima de {tmin} e temperatura máxima de {tmax}\n" \
