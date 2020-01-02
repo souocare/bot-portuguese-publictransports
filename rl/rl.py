@@ -33,7 +33,7 @@ def get_typeschedule(json, datateste):
             sched1_obj = datetime.datetime.strptime((sched_set[0]), "%d/%m")
             sched2_obj = datetime.datetime.strptime((sched_set[1]), "%d/%m")
 
-            if sched1_obj < datateste < sched2_obj:
+            if sched1_obj <= datateste <= sched2_obj:
                 type_final = type_final + type
 
     return type_final
