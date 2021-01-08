@@ -1,5 +1,5 @@
 telepot==12.7
 requests==2.21.0
 fake-useragent==0.1.11
-lxml==4.3.2
+lxml==4.6.2
 pandas==0.24.2
