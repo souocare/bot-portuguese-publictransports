@@ -2,6 +2,8 @@
 A telegram bot that gives information about Public Transportation in Portugal, specially in Lisbon. 
 As of right now, it only has information from the "Metro de Lisboa", "TTSL" (boats), "Rodoviária de Lisboa" (only the "Diretas do Infantado"). More going to be added. (read "Plans for the future" below).
 
+
+
 Below, you have an example of how the Bot works:
 
 ![Alt Text](https://media.giphy.com/media/YnGoodK3UjaUXNKqyv/giphy.gif)
