@@ -7,8 +7,13 @@ from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 import urllib.request, json
 import pandas as pd
 from fake_useragent import UserAgent
+import os
 
-bot = telepot.Bot(token='Telegram_Token') #normal
+###  IMPORT JSON FILE WITH KEYS/TOKENS ###
+tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
+tokenkey_data = json.loads(tokenkey_path.read())
+
+bot = telepot.Bot(token=tokenkey_data['Telegram_Token']) #normal
 
 def get_option_station(query):
     markup_lines = telepot.namedtuple.ReplyKeyboardMarkup(
@@ -99,3 +104,5 @@ def get_info_ttsl(station):
 
     except:
         return "De momento, não é possivel obter a informação desejada. Tente mais tarde.\nPedimos desculpa."
+
+

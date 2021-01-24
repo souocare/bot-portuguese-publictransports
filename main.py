@@ -6,19 +6,28 @@ from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 import traceback
 import datetime
+import os
+import dropbox
+from dropbox.files import WriteMode
+import json
 #functions from files
 from metro.menu_metro import metro_option
 from metro.menu_metro import get_info_line, get_last_trains, metro_estadolinha, metro_tempocomboio
 from ttsl.ttsl import get_option_station, send_ttsl_info
 from rl.rl import send_rl_info, rl_partidas_options, get_information_json
+from cp.cp import get_last_trains_cp, get_line_cp, response_estacoes_cp
 from others.piadas_secas import get_piada_seca
 from others.weather import get_all_weather_city, get_all_weather_geoloc
+from drop import check_chatid, get_sugestion
 
 
+###  IMPORT JSON FILE WITH KEYS/TOKENS ###
+tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
+tokenkey_data = json.loads(tokenkey_path.read())
 
 #https://telepot.readthedocs.io/en/latest/
-bot = telepot.Bot(token='Telegram_Token') #normal
-
+bot = telepot.Bot(token=tokenkey_data['Telegram_Token']) #normal
+dbx = dropbox.Dropbox(tokenkey_data['Dropbox_key'])
 
 
 metro_lines = ['Linha Azul', "Linha Amarela", "Linha Verde", "Linha Vermelha",
@@ -44,12 +53,27 @@ lines_metro = ["Aeroporto", "Alameda", "Alfornelos", "Alvalade","Alto Moinhos",
 
 rl_options = ["Partidas do Infantado", "Partidas do Campo Grande"]
 
-back_options = ["Sair", "Voltar para o Metro", "Voltar para o Menu Principal"]
+cp_lines = ['Linha de Sintra', "Linha do Sado", "Linha da Fertagus", "Linha de Cascais"]
 
+cp_stations = ['Sintra', "Portela", "Algueirão", "Mercês", "Rio de Mouro", "Mira Sintra - Meleças",
+               "Cacém", "Massamá - Barcarena", "Monte Abraão", "Queluz - Belas", "Amadora", "Reboleira",
+               "Sta. Cruz / Damaia", "Benfica", "Alcântara - Terra", "Campolide", "Rossio.", "Sete Rios.",
+               "Entrecampos.", "Roma - Areeiro", "Marvila", "Sta. Apolónia", "Braço de Prata", "Oriente.",
+               "Moscavide.", "Sacavém.", "Bobadela", "Santa Iria", "Póvoa", "Alverca", "Alhandra",
+               "V. F. Xira", "Castanheira do Ribatejo", "Carregado", "V. N. Rainha",
+               "Espadanal da Azambuja", "Azambuja", 'Barreiro.', "Barreiro A", "Lavradio", "Baixa da Banheira",
+               "Alhos Vedros", "Moita", "Penteado", "Pinhal Novo", "Venda do Alcaide", "Palmela", "Setúbal",
+               "Praça do Quebedo", "Praias do Sado A", 'Setúbal', "Palmela", "Venda do Alcaide", "Pinhal Novo",
+               "Penalva", "Coina", "Fogueteiro", "Foros de Amora", "Corroios", "Pragal", "Campolide", "Sete Rios.",
+               "Entrecampos.", "Roma - Areeiro", 'Cais do Sodré', "Santos", "Alcântara", "Belém.", "Algés",
+               "Cruz Quebrada", "Caxias", "Paço de Arcos", "Santo Amaro", "Oeiras", "Carcavelos", "Parede",
+               "S. Pedro", "S. João", "Estoril", "Monte Estoril", "Cascais"]
+
+back_options = ["Sair", "Voltar para o Metro", "Voltar para o Menu Principal", "Voltar para o menu CP / Fertagus"]
 
 def mainn_menuu(chatid):
     markup = telepot.namedtuple.ReplyKeyboardMarkup(
-        keyboard=[['Metro', "RL"], ["CP", "Carris"], ["Barcos", "Mafrense"], ["Metereologia"]])
+        keyboard=[["Informação de utilização"],['Metro', "RL"], ["CP / Fertagus", "Carris"], ["Barcos", "Mafrense"], ["Metereologia"]])
 
     bot.sendMessage(chat_id=chatid,
                     text="Bem-vindo ao teu bot pessoal dos transportes. Escolhe, das opções abaixo,"
@@ -57,9 +81,9 @@ def mainn_menuu(chatid):
                          " que está na barra das mensagens, que é um quadrado com 4 bolinhas lá dentro\n\n"
                          "Caso não queiras nenhuma, podes simplesmente sair da conversa"
                          ", que quando voltares, estarei a tua espera!\n\nPs: Se quiseres uma piada seca, "
-                         "escreve 'Piada Seca'\n\n***Warning:*** Eu dependo de que os sites das transportadoras estejam"
-                         " funcionais. Por isso se algo não ter, desculpa. Algum problema, "
-                         "contacta-me para gonga1999@outlook.pt", reply_markup=markup, parse_mode='Markdown')
+                         "escreve 'Piada Seca'\n\nSe me quiserem ajudar de alguma forma, podem-me ajudar através daqui: https://www.paypal.me/souocare\n\n***Warning:*** Eu dependo de que os sites das transportadoras estejam"
+                         " funcionais. Por isso se algo não der, desculpa. Algum problema, "
+                         "contacta-me para gonga1999@outlook.pt", reply_markup=markup, parse_mode='Markdown', disable_web_page_preview=True)
 
 
 
@@ -76,14 +100,18 @@ if __name__ == '__main__':
                 print("Chat ID: " + str(response[0]['message']["chat"]["id"]) +
                   "\nNome: " + str(response[0]['message']["chat"]["first_name"]) + " " + response[0]['message']["chat"]["last_name"] +
                   "\nMensagem: " + str(response[0]['message']['text']) +
-                  "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
+                  "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) +
+                  "\nInformação adicional: " + check_chatid(str(response[0]['message']["chat"]["id"]),
+                                                            str(response[0]['message']["chat"]["first_name"]) + " " + response[0]['message']["chat"]["last_name"]) + "\n")
 
             except KeyError:
                 try:
                     print("Chat ID: " + str(response[0]['message']["chat"]["id"]) +
                           "\nNome: " + str(response[0]['message']["chat"]["first_name"]) +
                           "\nMensagem: " + str(response[0]['message']['text']) +
-                          "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) + "\n")
+                          "\nHoras: " + str(datetime.datetime.fromtimestamp(response[0]['message']['date'])) +
+                          "\nInformação adicional: " + check_chatid(str(response[0]['message']["chat"]["id"]),
+                                                                    str(response[0]['message']["chat"]["first_name"]) + " " + response[0]['message']["chat"]["last_name"]) + "\n")
 
                 except KeyError:
                     pass
@@ -96,19 +124,26 @@ if __name__ == '__main__':
                     mainn_menuu(response[0]["message"]['from']['id'])
 
 
-                elif response[0]['message']['text'] == '/help_commands':
-                    all_comands_oldlist = ["Metro", "RL", "CP",
-                                           "Carris", "Barcos", "Mafrense", "Metereologia"] + metro_lines + sub_options + boats_lines
+                elif response[0]['message']['text'] == '/help_commands' or response[0]['message']['text'] == 'Informação de utilização':
+                    info = "Abaixo, estão presentes todos os comandos que pode utilizar.\n\n" \
+                           "-> Caso queira ver a ***metereologia***, escreva: ***Met-NomeCidade*** (com ou sem espaços entre o hifen), " \
+                           "ou pode escrever Metereologia-NomeCidade\n" \
+                           "-> Caso queira uma ***piada seca***, escreva: ***Piada seca***\n" \
+                           "-> Caso queira deixar uma ***sugestão***, escreva: ***sugestão: (a sua sugestão)*** \n\n" \
+                           "De seguida, são apresentados todos os comandos que pode usar:\n"
+                    all_comands_oldlist = ["Metro", "RL", "CP / Fertagus",
+                                           "Carris", "Barcos", "Mafrense", "Metereologia"] + \
+                                           metro_lines + sub_options + boats_lines + rl_options + cp_lines
                     all_comands_newlist = []
                     for element in all_comands_oldlist:
                         all_comands_newlist.append("-> " + element + "\n")
                     all_commands_str = ''.join(all_comands_newlist)
-                    all_commands_str = all_commands_str + "\n-> Escrever o nome da estação para ver o " \
-                                                          "tempo de espera (p.e 'Baixa-Chiado')"
+                    all_commands_str = all_commands_str + "> Escrever o nome da estação para ver o " \
+                                                          "tempo de espera (p.e 'Baixa Chiado')"
 
                     bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
-                                    text="Abaixo estão todos os comandos que pode executar e ter uma resposta mais "
-                                         "rapida: \n" + all_commands_str)
+                                    text=info + all_commands_str, parse_mode='markdown')
+
 
                 elif response[0]['message']['text'] == 'Metro':
                     metro_option(response, response[0]['message']['from']['id'])
@@ -118,8 +153,8 @@ if __name__ == '__main__':
                 elif response[0]['message']['text'] == 'RL':
                     rl_partidas_options(response[0]['message']['from']['id'])
 
-                elif response[0]['message']['text'] == 'CP':
-                    bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
+                elif response[0]['message']['text'] == 'CP / Fertagus':
+                    get_line_cp(response[0]["message"]['chat']['id'])
 
                 elif response[0]['message']['text'] == 'Carris':
                     bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
@@ -129,7 +164,7 @@ if __name__ == '__main__':
 
                 elif response[0]['message']['text'] == 'Mafrense':
                     bot.sendMessage(response[0]["message"]['from']['id'], text="Ainda não disponivel.")
-                    
+
                 elif response[0]['message']['text'] == 'Metereologia':
                     bot.sendMessage(response[0]["message"]['from']['id'],
                                     text="Para obter a informação de uma cidade, escreva 'Metereologia - NomeCidade.\n"
@@ -200,19 +235,39 @@ if __name__ == '__main__':
 
                     offset = offset_rl + 1
 
+                elif response[0]['message']['text'] in cp_lines:
+                    response_estacoes_cp(response[0]['message']['text'],
+                                         response[0]["message"]['chat']['id'])
+
+                elif response[0]['message']['text'] in cp_stations:
+                    information_trains = get_last_trains_cp(response[0]['message']['text'],
+                                                            response[0]['message']['date'])
+                    bot.sendMessage(response[0]["message"]['chat']['id'],
+                                    text=information_trains, parse_mode='markdown')
+
 
                 elif response[0]['message']['text'] in back_options:
                     if response[0]['message']['text'] == "Sair" or response[0]['message']['text'] == "Voltar para o Menu Principal":
                         mainn_menuu(response[0]['message']["chat"]["id"])
                     elif response[0]['message']['text'] == "Voltar para o Metro":
                         metro_option(response, response[0]['message']['from']['id'])
-                        
+                    elif response[0]['message']['text'] == "Voltar para o menu CP / Fertagus":
+                        get_line_cp(response[0]['message']['from']['id'])
+
+
                 elif (response[0]['message']['text']).lower().startswith("met - ") or \
-                        (response[0]['message']['text']).lower().startswith("met-"):
+                        (response[0]['message']['text']).lower().startswith("met-") or \
+                        (response[0]['message']['text']).lower().startswith("metereologia-") or \
+                        (response[0]['message']['text']).lower().startswith("metereologia - "):
                     if (response[0]['message']['text']).lower().startswith("met - "):
                         cidade = response[0]['message']['text'][6:]
                     if (response[0]['message']['text']).lower().startswith("met-"):
                         cidade = response[0]['message']['text'][4:]
+                    if (response[0]['message']['text']).lower().startswith("metereologia-"):
+                        cidade = response[0]['message']['text'][13:]
+                    if (response[0]['message']['text']).lower().startswith("metereologia - "):
+                        cidade = response[0]['message']['text'][15:]
+
                     try:
                         bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
                                         text=get_all_weather_city(cidade),
@@ -221,6 +276,22 @@ if __name__ == '__main__':
                         bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
                                         text="De momento não é possivel obter a informação. Tente mais tarde",
                                         parse_mode='markdown')
+
+                elif response[0]['message']['chat']['id'] == 519356699 and (response[0]['message']['text']).startswith("Aviso:\n"):
+                    a, d = dbx.files_download("/Users.json")
+                    json_data = json.loads(d.content.decode("ISO-8859-1"))
+                    for chatid in json_data.keys():
+                        bot.sendMessage(chat_id=int(chatid),
+                                        text=((response[0]['message']['text'])[7:]).replace("*", "***"), parse_mode='markdown')
+                    bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                    text="Aviso enviado com sucesso!")
+
+                elif (response[0]['message']['text']).lower().startswith("sugestão:") or (response[0]['message']['text']).lower().startswith("sugestao:"):
+                    get_sugestion(response[0]['message']['chat']['id'],
+                                  response[0]['message']['text'],
+                                  response[0]['message']['date'])
+                    bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                    text="Obrigado pela sugestão!")
 
 
                 else:
@@ -232,7 +303,8 @@ if __name__ == '__main__':
                                          "seguinte: '{msg}'.\n\n Quiseste começar a conversa para obter informações ou não?"
                                     .format(msg=response[0]['message']['text']), reply_markup=markup_altern)
 
-            except Exception:
+
+            except KeyError:
                 try:
                     location = response[0]['message']['location']
                     bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
@@ -240,13 +312,18 @@ if __name__ == '__main__':
                                     parse_mode='markdown')
 
                 except:
-                    bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
-                                    text="De momento não é possivel obter a informação. Tente mais tarde",
-                                    parse_mode='markdown')
-                    file = open("log_file.txt", "w")
-                    file.write(traceback.format_exc())
-                    file.close()
                     pass
+
+            except Exception:
+                bot.sendMessage(chat_id=response[0]["message"]['from']['id'],
+                                text="De momento não é possivel obter a informação. Tente mais tarde",
+                                parse_mode='markdown')
+
+                error = bytes(str(traceback.format_exc()).encode())
+                dbx.files_upload(error, "/Error.txt", WriteMode.overwrite)
+
+                print(traceback.format_exc())
+                pass
 
 
 
@@ -255,3 +332,4 @@ if __name__ == '__main__':
                 offset = response[-1]["update_id"] + 1  # penso que isto é para não receber as mensagens antigas
             except IndexError:
                 pass
+

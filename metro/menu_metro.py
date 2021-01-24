@@ -1,13 +1,21 @@
-v#!/usr/bin/env python3
+#!/usr/bin/env python3
 
 import telepot, requests, time
+import json
 import telepot.namedtuple
+import os
 from .metro_information import estado_linha
 from .metro_information import dictionary_metro, last_trains_timetable
 from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 
-bot = telepot.Bot(token='Telegram_Token') #normal
+
+###  IMPORT JSON FILE WITH KEYS/TOKENS ###
+tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
+tokenkey_data = json.loads(tokenkey_path.read())
+
+
+bot = telepot.Bot(token=tokenkey_data['Telegram_Token']) #normal
 
 
 def metro_option(response, chatid):
@@ -20,7 +28,7 @@ def metro_option(response, chatid):
 
 def get_info_line(line, chat_id, query):
     try:
-        bot.sendMessage(chat_id=chat_id, text=estado_linha(line))
+        bot.sendMessage(chat_id=chat_id, text=estado_linha(line), parse_mode='Markdown')
     except:
         bot.sendMessage(chat_id=chat_id, text="De momento, não é possivel obter a informação desejada. "
                                               "Tente mais tarde.\nPedimos desculpa.")

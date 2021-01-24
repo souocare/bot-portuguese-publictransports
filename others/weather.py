@@ -1,12 +1,20 @@
 import requests
 import datetime
+import os
+import json
+
+
+
+###  IMPORT JSON FILE WITH KEYS/TOKENS ###
+tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
+tokenkey_data = json.loads(tokenkey_path.read())
 
 def get_weather_city(city):
     information = requests.get("http://api.openweathermap.org/data/2.5/weather?q={city}&"
                                "appid={priv_key}&"
                                "units=metric&"
                                "lang=pt".format(city=city,
-                                                priv_key="PRIVATE KEY OPENWEATHERAPI")).json()
+                                                priv_key=tokenkey_data['Weatherapi_key'])).json()
 
     if str(information['cod']) == "200":
         metereologia = [tempo["description"].capitalize() for tempo in information["weather"]]
