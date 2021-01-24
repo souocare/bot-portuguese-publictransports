@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import requests, re, datetime
 import os
 import json
