@@ -44,11 +44,16 @@ def send_ttsl_info(query, estacao):
 
 def get_info_ttsl(station):
     try:
-        response = requests.get("https://ttsl.pt/").text
+        ua = UserAgent()
+        userag = ua.ie
+
+        headers = {'User-Agent': userag}
+
+        response = requests.get("https://ttsl.pt/", headers=headers).text
+
 
         partidasnonce = response[response.find("partidasNonce") + 16:response.find("partidasNonce") + 26]
 
-        ua = UserAgent()
 
         req = urllib.request.Request("https://ttsl.pt/wp-admin/admin-ajax.php")
 
@@ -56,7 +61,7 @@ def get_info_ttsl(station):
         req.add_header("Accept", "*/*")
         req.add_header("Origin", "https://ttsl.pt")
         req.add_header("X-Requested-With", "XMLHttpRequest")
-        req.add_header("User-Agent", ua.ie)
+        req.add_header("User-Agent", userag)
         req.add_header("Sec-Fetch-Mode", "cors")
         req.add_header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
         req.add_header("Sec-Fetch-Site", "same-origin")
