@@ -25,11 +25,8 @@ What I also recommend is to create an executable file.
 # Plans for the future
 * Add more public tranports:
   * Rodoviária de Lisboa (all lines);
-  * Comboios de Portugal;
   * Carris;
-  * Fertagus;
   * Mafrense;
-  * Adding the weather
   * Others not planned yet.
 
 * Add a more updated telegram bot module, or make my own.
@@ -45,3 +42,6 @@ What I also recommend is to create an executable file.
 # Acknowledgements
 I need to thanks to all people that supported me to this project. They really helped me not giving up, and always make everything better.
 Also, I need to thank to Metro de Lisboa for creating a very easy API to use. And, of course, to the creator of Telepot module. 
+
+# LICENSE
+This software is licensed under the MIT License. See the LICENSE file in the top distribution directory for the full license text. 
