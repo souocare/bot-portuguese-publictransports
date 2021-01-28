@@ -6,12 +6,11 @@ import json
 import datetime
 import os
 from dropbox.files import WriteMode
+from dotenv import load_dotenv
 
-###  IMPORT JSON FILE WITH KEYS/TOKENS ###
-tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
-tokenkey_data = json.loads(tokenkey_path.read())
+load_dotenv()
 
-dbx = dropbox.Dropbox(tokenkey_data['Dropbox_key'])
+dbx = dropbox.Dropbox(os.getenv('Dropbox_key'))
 
 def get_data_fromdropbox(ficheiro):
     a, d = dbx.files_download(ficheiro)

@@ -5,19 +5,17 @@ import requests
 import datetime
 import os
 import json
+from dotenv import load_dotenv
 
+load_dotenv()
 
-
-###  IMPORT JSON FILE WITH KEYS/TOKENS ###
-tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
-tokenkey_data = json.loads(tokenkey_path.read())
 
 def get_weather_city(city):
     information = requests.get("http://api.openweathermap.org/data/2.5/weather?q={city}&"
                                "appid={priv_key}&"
                                "units=metric&"
                                "lang=pt".format(city=city,
-                                                priv_key=tokenkey_data['Weatherapi_key'])).json()
+                                                priv_key=os.getenv('Weatherapi_key'))).json()
 
     if str(information['cod']) == "200":
         metereologia = [tempo["description"].capitalize() for tempo in information["weather"]]
@@ -45,7 +43,7 @@ def get_weather_geoloc(lat, lon):
                                "units=metric&"
                                "lang=pt".format(lat=lat,
                                                 lon=lon,
-                                                priv_key="PRIVATE KEY OPENWEATHERAPI")).json()
+                                                priv_key=os.getenv('Weatherapi_key'))).json()
 
     if str(information['cod']) == "200":
         print(information)
@@ -73,7 +71,7 @@ def get_forecast_city(city):
                                "appid={priv_key}&"
                                "units=metric&"
                                "lang=pt".format(city=city,
-                                                priv_key="PRIVATE KEY OPENWEATHERAPI")).json()
+                                                priv_key=os.getenv('Weatherapi_key'))).json()
 
     temp_min_hoje = 100
     temp_max_hoje = 0
@@ -152,7 +150,7 @@ def get_forecast_geoloc(lat, lon):
                                "units=metric&"
                                "lang=pt".format(lat=lat,
                                                 lon=lon,
-                                                priv_key="PRIVATE KEY OPENWEATHERAPI")).json()
+                                                priv_key=os.getenv('Weatherapi_key'))).json()
 
     temp_min_hoje = 100
     temp_max_hoje = 0

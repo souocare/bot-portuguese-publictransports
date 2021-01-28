@@ -4,3 +4,4 @@ fake-useragent==0.1.11
 lxml==4.6.2
 pandas==0.24.2
 dropbox==9.4.0
+python-dotenv==0.15.0

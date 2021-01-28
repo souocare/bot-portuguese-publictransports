@@ -11,11 +11,10 @@ import telepot, time
 import telepot.namedtuple
 from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+from dotenv import load_dotenv
 
+load_dotenv()
 
-###  IMPORT JSON FILE WITH KEYS/TOKENS ###
-tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
-tokenkey_data = json.loads(tokenkey_path.read())
 
 ids_startstations = {
     "Sintra": "9461101", "Portela": "9461093", "Algueirão": "9461069", "Mira Sintra - Meleças": "9462042",
@@ -41,7 +40,7 @@ ids_startstations = {
 
 
 # functions for bot
-bot = telepot.Bot(token=tokenkey_data['Telegram_Token']) #normal
+bot = telepot.Bot(token=os.getenv('Telegram_Token')) #normal
 
 def get_line_cp(chat_id):
     buttons = telepot.namedtuple.ReplyKeyboardMarkup(

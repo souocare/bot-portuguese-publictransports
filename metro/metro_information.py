@@ -4,6 +4,9 @@
 import requests, re, datetime
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 dictionary_metro = {"Aeroporto": "AP", "Alameda": "AM", "Alfornelos": "AF", "Alvalade": "AL", "Alto Moinhos": "AH",
                     "Amadora Este": "AS", "Ameixoeira": "AX", "Anjos": "AN", "Areeiro": "AE", "Arroios": "AR",
@@ -19,21 +22,18 @@ dictionary_metro = {"Aeroporto": "AP", "Alameda": "AM", "Alfornelos": "AF", "Alv
                     "Terreiro do Paço": "TP", "Voltar para Metro": "Voltar para Metro",
                     "Voltar para Menu Principal": "Voltar para Menu Principal"}
 
-###  IMPORT JSON FILE WITH KEYS/TOKENS ###
-tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
-tokenkey_data = json.loads(tokenkey_path.read())
 
 
 ## Important Functions for requests of Metro API
 def get_access_token():
     headers_get_token = {
-        'Authorization': tokenkey_data['Metro_TOKEN'],
+        'Authorization': os.getenv('Metro_TOKEN'),
     }
 
     data_get_token = {
         'grant_type': 'password',
-        'username': tokenkey_data['Metro_username'],
-        'password': tokenkey_data['Metro_password']
+        'username': os.getenv('Metro_username'),
+        'password': os.getenv('Metro_password')
     }
 
     response_get_token = requests.post('https://api.metrolisboa.pt:8243/token',

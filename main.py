@@ -20,15 +20,14 @@ from cp.cp import get_last_trains_cp, get_line_cp, response_estacoes_cp
 from others.piadas_secas import get_piada_seca
 from others.weather import get_all_weather_city, get_all_weather_geoloc
 from drop import check_chatid, get_sugestion
+from dotenv import load_dotenv
 
+load_dotenv()
 
-###  IMPORT JSON FILE WITH KEYS/TOKENS ###
-tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
-tokenkey_data = json.loads(tokenkey_path.read())
 
 #https://telepot.readthedocs.io/en/latest/
-bot = telepot.Bot(token=tokenkey_data['Telegram_Token']) #normal
-dbx = dropbox.Dropbox(tokenkey_data['Dropbox_key'])
+bot = telepot.Bot(token=os.getenv('Telegram_Token')) #normal
+dbx = dropbox.Dropbox(os.getenv('Dropbox_key'))
 
 
 metro_lines = ['Linha Azul', "Linha Amarela", "Linha Verde", "Linha Vermelha",

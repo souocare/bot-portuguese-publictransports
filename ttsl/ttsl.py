@@ -9,12 +9,12 @@ import urllib.request, json
 import pandas as pd
 from fake_useragent import UserAgent
 import os
+from dotenv import load_dotenv
 
-###  IMPORT JSON FILE WITH KEYS/TOKENS ###
-tokenkey_path = open("C:\\Users\\Souocare\\Documents\\Projects\\Bot_transportes\\configvars.json")
-tokenkey_data = json.loads(tokenkey_path.read())
+load_dotenv()
 
-bot = telepot.Bot(token=tokenkey_data['Telegram_Token']) #normal
+
+bot = telepot.Bot(token=os.getenv('Telegram_Token')) #normal
 
 def get_option_station(query):
     markup_lines = telepot.namedtuple.ReplyKeyboardMarkup(
