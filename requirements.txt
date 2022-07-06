@@ -1,7 +1,7 @@
 telepot==12.7
 requests==2.21.0
 fake-useragent==0.1.11
-lxml==4.6.3
+lxml==4.9.1
 pandas==0.24.2
 dropbox==9.4.0
 python-dotenv==0.15.0
